@@ -124,7 +124,8 @@ if (__DEV__) {
           typeof window.event !== 'undefined' &&
           window.hasOwnProperty('event')
         ) {
-          window.event = windowEvent;
+          // Fixes strict mode error for IE 11. See #11687
+          Object.defineProperty(window, 'event', { value: windowEvent });
         }
 
         func.apply(context, funcArgs);
